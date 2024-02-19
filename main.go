@@ -10,10 +10,10 @@ import (
 )
 
 const (
-	website             = "https://beta.frase.io"
-	initialName         = "beta.frase.io"
-	finalName           = "spyfu.host"
-	authorization_Token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZW1pbmFyc2VvQG91dGxvb2suY29tIiwiZXhwIjoxNzA4MzQ0Mjc5fQ.gfktiSmnouz_opQSmfH0mhSi1PFvidT6-VsKDL15TCwKcN-TlWDMPPw0h7kyTa5XrKrKfoxlCCmTW95UWNwq2w"
+	website             = ""
+	initialName         = ""
+	finalName           = ""
+	authorization_Token = ""
 	TimeoutURL          = ""
 )
 

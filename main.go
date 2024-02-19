@@ -9,6 +9,14 @@ import (
 	"strings"
 )
 
+const (
+	website             = "https://beta.frase.io"
+	initialName         = "beta.frase.io"
+	finalName           = "spyfu.host"
+	authorization_Token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZW1pbmFyc2VvQG91dGxvb2suY29tIiwiZXhwIjoxNzA4MzQ0Mjc5fQ.gfktiSmnouz_opQSmfH0mhSi1PFvidT6-VsKDL15TCwKcN-TlWDMPPw0h7kyTa5XrKrKfoxlCCmTW95UWNwq2w"
+	TimeoutURL          = ""
+)
+
 func main() {
 	http.HandleFunc("/", homehandler)
 	http.HandleFunc("/login", loginhandler)
@@ -33,7 +41,7 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	targetURL := "https://beta.frase.io" + r.URL.Path
+	targetURL := website + r.URL.Path
 
 	headers := make(http.Header)
 	for name, values := range r.Header {
@@ -44,7 +52,7 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 
 	cookie := r.Header.Get("Cookie")
 	headers.Add("Cookie", cookie)
-	headers.Add("Origin", "https://beta.frase.io")
+	headers.Add("Origin", website)
 
 	client := http.Client{}
 	req, err := http.NewRequest(r.Method, targetURL, bytes.NewBuffer([]byte{}))
@@ -71,7 +79,7 @@ func homehandler(w http.ResponseWriter, r *http.Request) {
 	// Modify the response body
 	bodyString := string(body)
 	bodyString = strings.ReplaceAll(bodyString, "</body>", "</body>replaceCode")
-	bodyString = strings.ReplaceAll(bodyString, "beta.frase.io", "spyfu.host")
+	bodyString = strings.ReplaceAll(bodyString, initialName, finalName)
 	bodyString = strings.ReplaceAll(bodyString, "</head>", "<style>.pt-3{display:none!important;}</style></head>")
 
 	// Set the Content-Type header
@@ -102,7 +110,7 @@ func loginhandler(w http.ResponseWriter, r *http.Request) {
 <script>
 window.localStorage.setItem(
  "frase_token",
- '"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzZW1pbmFyc2VvQG91dGxvb2suY29tIiwiZXhwIjoxNzA4MzQ0Mjc5fQ.gfktiSmnouz_opQSmfH0mhSi1PFvidT6-VsKDL15TCwKcN-TlWDMPPw0h7kyTa5XrKrKfoxlCCmTW95UWNwq2w"'
+ '"%s"'
 );
 
 window.localStorage.setItem(
@@ -125,6 +133,6 @@ sessionStorage.setItem(
 	'{"id":"0ab4bc60fb2b46fe8a9173d734fe6892","started":1708260850132,"lastActivity":1708260853555,"segmentId":0,"sampled":"buffer"}'
 );
 
-setTimeout(() => location.href = 'https://spyfu.host/app/documents', 100);
-</script>`)
+setTimeout(() => location.href = '%s', 100);
+</script>`, authorization_Token, TimeoutURL)
 }

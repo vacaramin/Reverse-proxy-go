@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 )
@@ -12,12 +13,17 @@ func main() {
 	http.HandleFunc("/", homehandler)
 	http.HandleFunc("/login", loginhandler)
 
-	http.ListenAndServe(":8080", nil)
+	if err := http.ListenAndServe(":8080", nil); err != nil {
+		log.Println(err)
+	}
+
 }
 
 func homehandler(w http.ResponseWriter, r *http.Request) {
 	//	for Handling CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
 
 	agent := "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36"
 	uri := "/app/documents"
